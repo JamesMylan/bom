@@ -30,6 +30,7 @@ while run:
   plane.left += vel
   if plane.left >= screenwidth:
     plane.left = -50
+    plane.y += 25
   if bomdropping:
     bom.y += 5
     for i in range(len(listt)):
@@ -45,6 +46,8 @@ while run:
     bomacdropping = False
   if not bomdropping:
     bom = pygame.Rect(plane.centerx-(width/2/2),plane.centery+(height/2),25,25)
+  if plane.collidelist(listt) != -1:
+    print(listt[10])
   screen.blit(sprite,(plane.x,plane.y))
   pygame.draw.ellipse(screen,"grey",bom)
   pygame.display.update()
