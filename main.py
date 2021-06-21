@@ -13,12 +13,12 @@ bomdropping = False
 listt = []
 clock = pygame.time.Clock()
 plane = pygame.Rect(x,y,width,height)
-sprite = pygame.image.load("awd.png")
+sprite = pygame.image.load("images/plane.png")
 building = pygame.Rect(50,300,50,200)
 bom = pygame.Rect(x,y,width/2,height/2)
 bomacdropping = False
 for i in range(8):
-  listt.append(pygame.Rect(building.x*i,random.randrange(200,390),building.width,building.height))
+  listt.append(pygame.Rect(building.x*i,random.randrange(100,390),building.width,building.height))
 while run:
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
@@ -47,7 +47,7 @@ while run:
   if not bomdropping:
     bom = pygame.Rect(plane.centerx-(width/2/2),plane.centery+(height/2),25,25)
   if plane.collidelist(listt) != -1:
-    print(listt[10])
+    run = False
   screen.blit(sprite,(plane.x,plane.y))
   pygame.draw.ellipse(screen,"grey",bom)
   pygame.display.update()

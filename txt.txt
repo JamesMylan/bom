@@ -1,1 +1,0 @@
-pygame.draw.rect(screen,(255,0,0),(building.x*i,building.y+i*10,building.width,building.height)) 
