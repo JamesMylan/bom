@@ -8,9 +8,11 @@ y=50
 width=50
 height=25
 vel=5
+score=0
 run = True
 bomdropping = False
 listt = []
+index = 1
 clock = pygame.time.Clock()
 plane = pygame.Rect(x,y,width,height)
 sprite = pygame.image.load("images/plane.png")
@@ -19,6 +21,8 @@ bom = pygame.Rect(x,y,width/2,height/2)
 bomacdropping = False
 fontyes =  pygame.font.SysFont("None",30)
 textsurface = fontyes.render("Game Over",True,(0,0,0))
+framelist = [pygame.image.load("images/explosion/output001.png"),pygame.image.load("images/explosion/output002.png"),pygame.image.load("images/explosion/output003.png"),pygame.image.load("images/explosion/output004.png"),pygame.image.load("images/explosion/output005.png"),pygame.image.load("images/explosion/output006.png")]
+
 for i in range(8):
   listt.append(pygame.Rect(building.x*i,random.randrange(200,390),building.width,building.height))
 def gameover():
@@ -50,6 +54,7 @@ while run:
         if listt[i].colliderect(bom):
           bomacdropping = False
           listt.pop(i)
+          score+=100
   screen.fill((177, 226, 252))
   if bom.y > 400:
     bomdropping = False
@@ -58,7 +63,14 @@ while run:
     bom = pygame.Rect(-50,-50,25,25)
   if plane.collidelist(listt) != -1:
     gameover()
+  index += 1
+  if index >= 6:
+    index = 1
+  scorefont = fontyes.render(("SCORE: "+str(score)),True,(0,0,0))
+  screen.blit(scorefont,(0,0))
   screen.blit(sprite,(plane.x,plane.y))
+  explosion = pygame.transform.scale(framelist[index],(screenwidth, screenheight))
+  screen.blit(explosion,(screenwidth/2 - explosion.get_rect().width / 2, screenheight/2 - explosion.get_rect().height / 2))
   pygame.draw.ellipse(screen,"grey",bom)
   for i in range(len(listt)):
     pygame.draw.rect(screen,"black",listt[i])
