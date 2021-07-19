@@ -21,7 +21,6 @@ bom = pygame.Rect(x,y,width/2,height/2)
 bomacdropping = False
 fontyes =  pygame.font.SysFont("None",30)
 textsurface = fontyes.render("Game Over",True,(0,0,0))
-framelist = [pygame.image.load("images/explosion/output001.png"),pygame.image.load("images/explosion/output002.png"),pygame.image.load("images/explosion/output003.png"),pygame.image.load("images/explosion/output004.png"),pygame.image.load("images/explosion/output005.png"),pygame.image.load("images/explosion/output006.png")]
 for i in range(8):
   listt.append(pygame.Rect(building.x*i,random.randrange(200,390),building.width,building.height))
 def gameover():
