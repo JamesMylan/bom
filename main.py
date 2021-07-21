@@ -12,13 +12,11 @@ score=0
 run = True
 bomdropping = False
 listt = []
-index = 1
 clock = pygame.time.Clock()
 plane = pygame.Rect(x,y,width,height)
 sprite = pygame.image.load("images/plane.png")
 building = pygame.Rect(50,300,50,300)
 bom = pygame.Rect(x,y,width/2,height/2)
-bomacdropping = False
 fontyes =  pygame.font.SysFont("None",30)
 textsurface = fontyes.render("Game Over",True,(0,0,0))
 for i in range(8):
@@ -39,7 +37,6 @@ while run:
   keys = pygame.key.get_pressed()
   if keys[pygame.K_SPACE] and not bomdropping:
     bomdropping = True
-    bomacdropping = True
     bom = pygame.Rect(plane.centerx-(width/2/2),plane.centery+(height/2),25,25)
   plane.left += vel
   if plane.left >= screenwidth:
@@ -48,9 +45,7 @@ while run:
   if bomdropping:
     bom.y += 5
     for v in listt:
-      if bomacdropping:
         if v.colliderect(bom):
-          bomacdropping = False
           bombdropping = False
           listt.remove(v)
           score+=100
@@ -58,14 +53,10 @@ while run:
   screen.fill((177, 226, 252))
   if bom.y > 400:
     bomdropping = False
-    bomacdropping = False
   if not bomdropping:
     bom = pygame.Rect(500,500,25,25)
   if plane.collidelist(listt) != -1:
     gameover()
-  index += 1
-  if index >= 6:
-    index = 1
   scorefont = fontyes.render(("SCORE: "+str(score)),True,(0,0,0))
   screen.blit(scorefont,(0,0))
   screen.blit(sprite,(plane.x,plane.y))
