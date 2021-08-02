@@ -10,15 +10,17 @@ height=25
 vel=5
 score=0
 run = True
-bomdropping = False
+bombdropping = False
 listt = []
 clock = pygame.time.Clock()
 plane = pygame.Rect(x,y,width,height)
 sprite = pygame.image.load("images/plane.png")
 building = pygame.Rect(50,300,50,300)
-bom = pygame.Rect(x,y,width/2,height/2)
+bomb = pygame.Rect(x,y,width/2,height/2)
 fontyes =  pygame.font.SysFont("None",30)
-textsurface = fontyes.render("Game Over",True,(0,0,0))
+gameovertext = fontyes.render("Game Over",True,(0,0,0))
+wintext = fontyes.render(("WIN"),True,(0,0,0))
+#create buildings in list
 for i in range(8):
   listt.append(pygame.Rect(building.x*i,random.randrange(150,375),building.width,building.height))
 def gameover():
@@ -28,39 +30,41 @@ def gameover():
       if event.type == pygame.QUIT:
         run = False
     screen.fill((177, 226, 252))
-    screen.blit(textsurface,(screenwidth/2 -textsurface.get_rect().width/2,screenheight/2-textsurface.get_rect().height/2))
+    screen.blit(gameovertext,(screenwidth/2 -gameovertext.get_rect().width/2,screenheight/2-gameovertext.get_rect().height/2))
     pygame.display.update()
 while run:
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
       run = False
   keys = pygame.key.get_pressed()
-  if keys[pygame.K_SPACE] and not bomdropping:
-    bomdropping = True
-    bom = pygame.Rect(plane.centerx-(width/2/2),plane.centery+(height/2),25,25)
+  if keys[pygame.K_SPACE] and not bombdropping:
+    bombdropping = True
+    bomb = pygame.Rect(plane.centerx-(width/2/2),plane.centery+(height/2),25,25)
   plane.left += vel
   if plane.left >= screenwidth:
     plane.left = -50
     plane.y += 25
-  if bomdropping:
-    bom.y += 5
+  if bombdropping:
+    bomb.y += 5
     for v in listt:
-        if v.colliderect(bom):
+        if v.colliderect(bomb):
           bombdropping = False
           listt.remove(v)
           score+=100
-          bom = pygame.Rect(screenwidth,screenheight,25,25)
+          bomb = pygame.Rect(screenwidth,screenheight,25,25)
   screen.fill((177, 226, 252))
-  if bom.y > 400:
-    bomdropping = False
-  if not bomdropping:
-    bom = pygame.Rect(500,500,25,25)
+  if bomb.y > 400:
+    bombdropping = False
+  if not bombdropping:
+    bomb = pygame.Rect(500,500,25,25)
   if plane.collidelist(listt) != -1:
     gameover()
+  if score == 800:
+    screen.blit(wintext,(screenwidth/2 -wintext.get_rect().width/2,screenheight/2-wintext.get_rect().height/2))
   scorefont = fontyes.render(("SCORE: "+str(score)),True,(0,0,0))
   screen.blit(scorefont,(0,0))
   screen.blit(sprite,(plane.x,plane.y))
-  pygame.draw.ellipse(screen,"grey",bom)
+  pygame.draw.ellipse(screen,"grey",bomb)
   for v in listt:
     pygame.draw.rect(screen,"black",v)
   pygame.display.update()
