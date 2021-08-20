@@ -42,6 +42,7 @@ while run:
   keys = pygame.key.get_pressed()
   if keys[pygame.K_SPACE] and not bombdropping:
     bombdropping = True
+    #places bomb under the middle of the plane
     bomb = pygame.Rect(plane.centerx-(width/2/2),plane.centery+(height/2),25,25)
   plane.left += vel
   if plane.left >= screenwidth:
@@ -55,6 +56,7 @@ while run:
         listt.remove(v)
         score+=100
         bomb = pygame.Rect(screenwidth,screenheight,25,25)
+  #sky blue colour
   screen.fill((177, 226, 252))
   if bomb.y > 400:
     bombdropping = False
@@ -65,6 +67,7 @@ while run:
     gameover()
   if score == 800:
     screen.blit(wintext,(screenwidth/2 -wintext.get_rect().width/2,screenheight/2-wintext.get_rect().height/2))
+  #antialiased text
   scorefont = fontyes.render(("SCORE: "+str(score)),True,(0,0,0))
   screen.blit(scorefont,(0,0))
   screen.blit(sprite,(plane.x,plane.y))
