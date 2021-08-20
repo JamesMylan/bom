@@ -1,5 +1,6 @@
 import pygame, random
 pygame.init()
+#initialise variables
 screenheight = 400
 screenwidth = 400
 screen = pygame.display.set_mode((screenheight,screenwidth))
@@ -30,9 +31,11 @@ def gameover():
       if event.type == pygame.QUIT:
         run = False
     screen.fill((177, 226, 252))
+    #put text in the middle of the display
     screen.blit(gameovertext,(screenwidth/2 -gameovertext.get_rect().width/2,screenheight/2-gameovertext.get_rect().height/2))
     pygame.display.update()
 while run:
+  #stop game if x button pressed
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
       run = False
@@ -47,15 +50,16 @@ while run:
   if bombdropping:
     bomb.y += 5
     for v in listt:
-        if v.colliderect(bomb):
-          bombdropping = False
-          listt.remove(v)
-          score+=100
-          bomb = pygame.Rect(screenwidth,screenheight,25,25)
+      if v.colliderect(bomb):
+        bombdropping = False
+        listt.remove(v)
+        score+=100
+        bomb = pygame.Rect(screenwidth,screenheight,25,25)
   screen.fill((177, 226, 252))
   if bomb.y > 400:
     bombdropping = False
   if not bombdropping:
+    #move bomb offscreen
     bomb = pygame.Rect(500,500,25,25)
   if plane.collidelist(listt) != -1:
     gameover()
